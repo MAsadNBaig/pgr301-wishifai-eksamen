@@ -1,0 +1,8 @@
+
+target/
+*.jar
+.env
+.aws/
+.idea/
+.vscode/
+.DS_Store
