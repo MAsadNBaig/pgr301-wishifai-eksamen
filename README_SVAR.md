@@ -42,7 +42,7 @@ Imaget tagges med `${{ github.sha }}`. Dette gir hvert bygg en unik tag knyttet 
 Terraform-jobben bruker `needs: build-and-push` fordi infrastrukturen skal distribuere imaget som nettopp er bygget og publisert. Hvis jobbene kjørte parallelt, kunne Terraform forsøkt å distribuere et image som ennå ikke finnes i ECR.
 
 GitHub Actions:
-https://github.com/MAsadNBaig/pgr301-wishifai-eksamen/actions
+https://github.com/MAsadNBaig/pgr301-wishifai-eksamen/actions/runs/43200746912
 
 ## Oppgave 2 – ECS Express og Terraform
 
