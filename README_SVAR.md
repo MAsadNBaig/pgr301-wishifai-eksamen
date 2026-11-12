@@ -71,7 +71,7 @@ https://wi-288c1d76286349018ae86bc912585c8b.ecs.eu-west-1.on.aws
 
 ## Oppgave 3 – Observability
 
-Micrometer brukes til å publisere egne applikasjonsmålinger til Amazon CloudWatch med namespace `Wishifai`.
+Micrometer brukes til å samle applikasjonsmålinger, med Amazon CloudWatch som observability-backend og namespace `Wishifai`.
 
 Tre sentrale målinger er implementert:
 
@@ -79,13 +79,13 @@ Tre sentrale målinger er implementert:
 - `wishifai.bedrock.duration`: måler tiden Bedrock bruker på generering av anbefalinger.
 - `wishifai.gifts.generated`: teller genererte gaveforslag.
 
-CloudWatch eksporterer blant annet Rekognition- og Bedrock-målingene som latency-statistikk, og forretningsmålingen som `wishifai.suggestions.generated.count`.
+Terraform oppretter CloudWatch-dashboardet `wishifai-48-observability` og alarmen `wishifai-48-rekognition-slow`.
 
-Terraform oppretter dashboardet `wishifai-48-observability` og alarmen `wishifai-48-rekognition-slow`.
+Dashboardet viser infrastrukturmålinger fra ECS, blant annet CPU, minne og antall kjørende tasks. Det er også konfigurert paneler for applikasjonsmålinger fra Micrometer, JVM, HTTP-responstid og garbage collection.
 
-Dashboardet samler infrastrukturmålinger fra ECS, forretningsmålinger og applikasjonsmålinger fra Spring Boot/Micrometer, blant annet CPU, minne, antall kjørende tasks, JVM-minne, HTTP-responstid og garbage collection.
+Alarmen overvåker gjennomsnittlig Rekognition-latens (`wishifai.rekognition.latency.avg`) med en terskel på 5000 ms.
 
-Alarmen overvåker gjennomsnittlig Rekognition-latens (`wishifai.rekognition.latency.avg`) med en terskel på 5000 ms. Dette gjør det mulig å oppdage treg bildegjenkjenning før det påvirker brukeropplevelsen betydelig.
+Dashboardet og alarmen er opprettet gjennom Terraform. Applikasjonens egendefinerte målinger er implementert, men alle måleverdiene ble ikke verifisert som synlige i CloudWatch under testing.
 
 ## Refleksjon – GenAI og DevOps
 
