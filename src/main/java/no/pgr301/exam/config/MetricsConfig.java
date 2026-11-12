@@ -1,8 +1,11 @@
+
 package no.pgr301.exam.config;
 
 import io.micrometer.cloudwatch2.CloudWatchConfig;
 import io.micrometer.cloudwatch2.CloudWatchMeterRegistry;
 import io.micrometer.core.instrument.Clock;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.composite.CompositeMeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +18,11 @@ import java.time.Duration;
 public class MetricsConfig {
 
     @Bean
-    public CloudWatchAsyncClient cloudWatchAsyncClient(@Value("${aws.region}") String region) {
-        return CloudWatchAsyncClient.builder().region(Region.of(region)).build();
+    public CloudWatchAsyncClient cloudWatchAsyncClient(
+            @Value("${aws.region}") String region) {
+        return CloudWatchAsyncClient.builder()
+                .region(Region.of(region))
+                .build();
     }
 
     @Bean
@@ -26,6 +32,7 @@ public class MetricsConfig {
             public String get(String key) {
                 return null;
             }
+
             @Override
             public String namespace() {
                 return "Wishifai";
@@ -39,8 +46,15 @@ public class MetricsConfig {
     }
 
     @Bean
-    public CloudWatchMeterRegistry cloudWatchMeterRegistry(CloudWatchConfig config,
-                                                           CloudWatchAsyncClient client) {
-        return new CloudWatchMeterRegistry(config, Clock.SYSTEM, client);
+    public CloudWatchMeterRegistry cloudWatchMeterRegistry(
+            CloudWatchConfig config,
+            CloudWatchAsyncClient client,
+            CompositeMeterRegistry compositeRegistry) {
+
+        CloudWatchMeterRegistry cloudWatchRegistry =
+                new CloudWatchMeterRegistry(config, Clock.SYSTEM, client);
+
+        compositeRegistry.add(cloudWatchRegistry);
+        return cloudWatchRegistry;
     }
 }
