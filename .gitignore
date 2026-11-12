@@ -6,3 +6,8 @@ target/
 .idea/
 .vscode/
 .DS_Store
+
+# Terraform local files and state
+.terraform/
+*.tfstate
+*.tfstate.*

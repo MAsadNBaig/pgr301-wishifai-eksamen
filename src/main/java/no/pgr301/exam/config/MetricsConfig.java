@@ -26,10 +26,9 @@ public class MetricsConfig {
             public String get(String key) {
                 return null;
             }
-
             @Override
             public String namespace() {
-                return "";
+                return "Wishifai";
             }
 
             @Override
