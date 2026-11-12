@@ -47,7 +47,7 @@ resource "aws_cloudwatch_dashboard" "wishifai" {
           title  = "Wishifai - Gift Analyses Generated"
           region = var.aws_region
           metrics = [
-            ["Wishifai", "wishifai.gifts.generated.count"]
+            ["Wishifai", "wishifai.suggestions.generated.count"]
           ]
           period = 60
           stat   = "Sum"
