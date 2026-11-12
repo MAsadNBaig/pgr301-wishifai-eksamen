@@ -47,7 +47,7 @@ resource "aws_cloudwatch_dashboard" "wishifai" {
           title  = "Wishifai - Gift Analyses Generated"
           region = var.aws_region
           metrics = [
-            ["Wishifai", "wishifai.suggestions.generated.count"]
+            ["Wishifai", "wishifai.gifts.generated.count"]
           ]
           period = 60
           stat   = "Sum"
@@ -63,7 +63,7 @@ resource "aws_cloudwatch_dashboard" "wishifai" {
           title  = "Wishifai - JVM Memory"
           region = var.aws_region
           metrics = [
-            ["Wishifai", "jvm.memory.used", "area", "heap"]
+            ["Wishifai", "jvm.memory.used.value", "area", "heap"]
           ]
           period = 60
           stat   = "Average"
@@ -79,7 +79,7 @@ resource "aws_cloudwatch_dashboard" "wishifai" {
           title  = "Wishifai - HTTP Request Latency"
           region = var.aws_region
           metrics = [
-            ["Wishifai", "http.server.requests"]
+            ["Wishifai", "http.server.requests.avg"]
           ]
           period = 60
           stat   = "Average"
@@ -95,7 +95,7 @@ resource "aws_cloudwatch_dashboard" "wishifai" {
           title  = "Wishifai - Garbage Collection Pause"
           region = var.aws_region
           metrics = [
-            ["Wishifai", "jvm.gc.pause"]
+            ["Wishifai", "jvm.gc.pause.avg"]
           ]
           period = 60
           stat   = "Average"
